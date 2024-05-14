@@ -77,6 +77,8 @@
 			tbmapb = new ComboBox();
 			tbmada = new ComboBox();
 			tbgioitinh = new ComboBox();
+			cbgroupphong = new ComboBox();
+			bunifuLabel7 = new Bunifu.UI.WinForms.BunifuLabel();
 			bunifuGroupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)dtgnv).BeginInit();
 			SuspendLayout();
@@ -903,9 +905,9 @@
 			bunifuLabel6.Location = new Point(625, 312);
 			bunifuLabel6.Name = "bunifuLabel6";
 			bunifuLabel6.RightToLeft = RightToLeft.No;
-			bunifuLabel6.Size = new Size(62, 30);
+			bunifuLabel6.Size = new Size(147, 30);
 			bunifuLabel6.TabIndex = 17;
-			bunifuLabel6.Text = "Mã PB";
+			bunifuLabel6.Text = "Phòng Hiện Tại";
 			bunifuLabel6.TextAlignment = ContentAlignment.TopLeft;
 			bunifuLabel6.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
 			// 
@@ -918,9 +920,9 @@
 			labelmada.Location = new Point(625, 369);
 			labelmada.Name = "labelmada";
 			labelmada.RightToLeft = RightToLeft.No;
-			labelmada.Size = new Size(66, 30);
+			labelmada.Size = new Size(59, 30);
 			labelmada.TabIndex = 19;
-			labelmada.Text = "Mã DA";
+			labelmada.Text = "Đề Án";
 			labelmada.TextAlignment = ContentAlignment.TopLeft;
 			labelmada.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
 			// 
@@ -1082,11 +1084,37 @@
 			tbgioitinh.TabIndex = 25;
 			tbgioitinh.KeyPress += tbgioitinh_KeyPress;
 			// 
+			// cbgroupphong
+			// 
+			cbgroupphong.FormattingEnabled = true;
+			cbgroupphong.Location = new Point(755, 430);
+			cbgroupphong.Name = "cbgroupphong";
+			cbgroupphong.Size = new Size(109, 28);
+			cbgroupphong.TabIndex = 26;
+			cbgroupphong.SelectedIndexChanged += cbgroupphong_SelectedIndexChanged;
+			// 
+			// bunifuLabel7
+			// 
+			bunifuLabel7.AllowParentOverrides = false;
+			bunifuLabel7.AutoEllipsis = false;
+			bunifuLabel7.CursorType = Cursors.Default;
+			bunifuLabel7.Font = new Font("Segoe UI", 13F);
+			bunifuLabel7.Location = new Point(625, 430);
+			bunifuLabel7.Name = "bunifuLabel7";
+			bunifuLabel7.RightToLeft = RightToLeft.No;
+			bunifuLabel7.Size = new Size(119, 30);
+			bunifuLabel7.TabIndex = 27;
+			bunifuLabel7.Text = "Chọn Phòng";
+			bunifuLabel7.TextAlignment = ContentAlignment.TopLeft;
+			bunifuLabel7.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
+			// 
 			// NhanVien
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(963, 574);
+			Controls.Add(bunifuLabel7);
+			Controls.Add(cbgroupphong);
 			Controls.Add(tbgioitinh);
 			Controls.Add(tbmada);
 			Controls.Add(tbmapb);
@@ -1143,5 +1171,7 @@
 		private ComboBox tbmapb;
 		private ComboBox tbmada;
 		private ComboBox tbgioitinh;
+		private ComboBox cbgroupphong;
+		private Bunifu.UI.WinForms.BunifuLabel bunifuLabel7;
 	}
 }

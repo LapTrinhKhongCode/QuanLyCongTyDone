@@ -79,14 +79,14 @@ namespace QuanLyCongTyDone
 
 			cbrole2.KeyPress += cbrole2_KeyPress;
 
-
+			tbid1.ReadOnly = true;
 		}
 
 
 
 		private void dtgac_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			tbid1.ReadOnly = true;
+			
 			int i = 0;
 			i = dtgac.CurrentRow.Index;
 			tbid1.Text = dtgac.Rows[i].Cells[0].Value.ToString();
@@ -102,7 +102,7 @@ namespace QuanLyCongTyDone
 		{
 			command = connection.CreateCommand();
 
-			command.CommandText = "insert into UserAccount values(N'" + tbid1.Text + "',N'" + tbus2.Text + "',N'" + tbpw3.Text + "',N'" + cbrole2.GetItemText(cbrole2.SelectedValue) + "')";
+			command.CommandText = "insert into UserAccount values(N'" + tbus2.Text + "',N'" + tbpw3.Text + "',N'" + cbrole2.GetItemText(cbrole2.SelectedValue) + "')";
 			//UPDATE user_account
 			//			JOIN role
 			//ON user_account.iduser = role.id
@@ -116,7 +116,7 @@ namespace QuanLyCongTyDone
 		{
 			command = connection.CreateCommand();
 
-			command.CommandText = "update UserAccount set iduser = N'" + tbid1.Text + "',username = N'" + tbus2.Text + "',password = N'" + tbpw3.Text + "',idrole = N'" + cbrole2.GetItemText(cbrole2.SelectedValue) + "'where iduser = '" + tbid1.Text + "'";
+			command.CommandText = "update UserAccount set username = N'" + tbus2.Text + "',password = N'" + tbpw3.Text + "',idrole = '" + cbrole2.GetItemText(cbrole2.SelectedValue) + "'where iduser = '" + tbid1.Text + "'";
 			command.ExecuteNonQuery();
 			loaddata();
 		}

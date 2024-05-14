@@ -94,8 +94,14 @@ namespace QuanLyCongTyDone
 			tbmapb.ValueMember = "MaPB";
 
 
+			DataSet ds2 = new DataSet();
+			SqlDataAdapter da2 = new SqlDataAdapter("SELECT MaPB, TenPB FROM PhongBan", sql);
+			da2.Fill(ds2, "TenPB");
+			cbgroupphong.DataSource = ds2.Tables["TenPB"];
+			cbgroupphong.DisplayMember = "TenPB";
+			cbgroupphong.ValueMember = "MaPB";
 
-
+			tbmanv.ReadOnly = true;
 
 
 
@@ -106,7 +112,7 @@ namespace QuanLyCongTyDone
 
 		private void dtgnv_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			tbmanv.ReadOnly = true;
+
 			int i = 0;
 			i = dtgnv.CurrentRow.Index;
 			tbmanv.Text = dtgnv.Rows[i].Cells[0].Value.ToString();
@@ -123,7 +129,7 @@ namespace QuanLyCongTyDone
 		{
 			command = connection.CreateCommand();
 
-			command.CommandText = "insert into ThongTinNV values('" + tbmanv.Text + "',N'" + tbtennv.Text + "','" + dtngaysinh.Text + "',N'" + tbgioitinh.Text + "',N'" + tbchucvu.Text + "','" + tbtienluong.Text + "',N'" + tbmapb.GetItemText(tbmapb.SelectedValue) + "',N'" + tbmada.GetItemText(tbmada.SelectedValue) + "')";
+			command.CommandText = "insert into ThongTinNV values(N'" + tbtennv.Text + "','" + dtngaysinh.Text + "',N'" + tbgioitinh.Text + "',N'" + tbchucvu.Text + "','" + tbtienluong.Text + "',N'" + tbmapb.GetItemText(tbmapb.SelectedValue) + "',N'" + tbmada.GetItemText(tbmada.SelectedValue) + "')";
 			command.ExecuteNonQuery();
 			loaddata();
 		}
@@ -160,7 +166,7 @@ namespace QuanLyCongTyDone
 		private void btsua_Click(object sender, EventArgs e)
 		{
 			command = connection.CreateCommand();
-			command.CommandText = "update ThongTinNV set TenNV = N'" + tbtennv.Text + "',NgaySinh = '" + dtngaysinh.Text + "',GioiTinh = N'" + tbgioitinh.Text + "',ChucVu = N'" + tbchucvu.Text + "',TienLuong = '" + tbtienluong.Text + "',MaPB = N'" + tbmapb.GetItemText(tbmapb.SelectedValue) + "',MaDA = N'" + tbmada.GetItemText(tbmada.SelectedValue) + "'where MaNV = '" + tbmanv.Text + "'";
+			command.CommandText = "update ThongTinNV set TenNV = N'" + tbtennv.Text + "',NgaySinh = '" + dtngaysinh.Text + "',GioiTinh = N'" + tbgioitinh.Text + "',ChucVu = N'" + tbchucvu.Text + "',TienLuong = '" + tbtienluong.Text + "',MaPB = '" + tbmapb.GetItemText(tbmapb.SelectedValue) + "',MaDA = '" + tbmada.GetItemText(tbmada.SelectedValue) + "'where MaNV = '" + tbmanv.Text + "'";
 			command.ExecuteNonQuery();
 			loaddata();
 		}
@@ -189,7 +195,17 @@ namespace QuanLyCongTyDone
 
 		private void tbgioitinh_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			e.Handled= true;	
+			e.Handled = true;
+		}
+
+		private void cbgroupphong_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			command = connection.CreateCommand();
+			command.CommandText = "SELECT MaNV, TenNV, NgaySinh, GioiTinh, ChucVu, TienLuong, TenPB, TenDA From ThongTinNV JOIN PhongBan ON ThongTinNV.MaPB = PhongBan.MaPB JOIN DeAn ON DeAn.MaDA = ThongTinNV.MaDA WHERE PhongBan.TenPB = '"+cbgroupphong.Text+"' ";
+			adapter.SelectCommand = command;
+			table.Clear();
+			adapter.Fill(table);
+			dtgnv.DataSource = table;
 		}
 	}
 }

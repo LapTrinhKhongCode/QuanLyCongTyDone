@@ -27,11 +27,13 @@ namespace QuanLyCongTyDone
 		void loaddata()
 		{
 			command = connection.CreateCommand();
-			command.CommandText = "SELECT * FROM DeAn";
+			command.CommandText = "SELECT MaDA, TenDA FROM DeAn";
 			adapter.SelectCommand = command;
 			table.Clear();
 			adapter.Fill(table);
 			dtgda.DataSource = table;
+			tbmada.ReadOnly = true;
+
 		}
 
 
@@ -65,7 +67,7 @@ namespace QuanLyCongTyDone
 		private void btthem_Click(object sender, EventArgs e)
 		{
 			command = connection.CreateCommand();
-			command.CommandText = "insert into DeAn values('" + tbmada.Text + "',N'" + tbtenda.Text + "')";
+			command.CommandText = "insert into DeAn values(N'" + tbtenda.Text + "')";
 			command.ExecuteNonQuery();
 			loaddata();
 		}
@@ -73,7 +75,7 @@ namespace QuanLyCongTyDone
 		private void btsua_Click(object sender, EventArgs e)
 		{
 			command = connection.CreateCommand();
-			command.CommandText = "update DeAn set MaDA = N'" + tbmada.Text + "',TenDA = '" + tbtenda.Text + "'where MaNV = '" + tbtenda.Text + "'";
+			command.CommandText = "update DeAn set TenDA = '" + tbtenda.Text + "'where MaNV = '" + tbtenda.Text + "'";
 			command.ExecuteNonQuery();
 			loaddata();
 		}
