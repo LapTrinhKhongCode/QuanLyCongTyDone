@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using Microsoft.VisualBasic.ApplicationServices;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Security.Cryptography;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace QuanLyCongTyDone
 {

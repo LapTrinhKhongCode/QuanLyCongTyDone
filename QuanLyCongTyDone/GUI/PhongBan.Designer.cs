@@ -836,7 +836,7 @@
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(794, 543);
+			ClientSize = new Size(794, 565);
 			Controls.Add(tbmada4);
 			Controls.Add(tbtentp3);
 			Controls.Add(bunifuLabel4);

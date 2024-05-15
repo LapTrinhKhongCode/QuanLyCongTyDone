@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace QuanLyCongTyDone
 {
@@ -114,7 +115,8 @@ namespace QuanLyCongTyDone
 			{
 				bunifuButton25.Visible = false;
 				bunifuButton1.Visible = true;
-			}else
+			}
+			else
 			{
 				bunifuButton25.Visible = true;
 				bunifuButton1.Visible = false;
@@ -125,7 +127,32 @@ namespace QuanLyCongTyDone
 		}
 
 
+		private void ExportToExcel(DataGridView dgv)
+		{
+			// Tạo một đối tượng Excel.Application
+			Excel.Application excelApp = new Excel.Application();
 
+			// Tạo một Workbook mới
+			Excel.Workbook excelWorkbook = excelApp.Workbooks.Add();
+
+			// Tạo một Worksheet
+			Excel.Worksheet excelWorksheet = (Excel.Worksheet)excelWorkbook.Sheets[1];
+
+			// Gán tên cho Worksheet
+			excelWorksheet.Name = "Data";
+
+			// Ghi dữ liệu từ DataGridView vào Excel
+			for (int i = 0; i < dgv.Rows.Count; i++)
+			{
+				for (int j = 0; j < dgv.Columns.Count; j++)
+				{
+					excelWorksheet.Cells[i + 1, j + 1] = dgv.Rows[i].Cells[j].Value;
+				}
+			}
+
+			// Mở Excel và hiển thị Workbook
+			excelApp.Visible = true;
+		}
 
 		private void dtgnv_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
@@ -161,8 +188,8 @@ namespace QuanLyCongTyDone
 				{
 					throw new Exception("Lỗi tên nhân viên không hợp lệ");
 				}
-				
-			}			
+
+			}
 			catch (Exception ex)
 			{
 				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
@@ -207,10 +234,10 @@ namespace QuanLyCongTyDone
 
 
 
-					command = connection.CreateCommand();
-					command.CommandText = "delete from ThongTinNV where MaNV = '" + tbmanv.Text + "'";
-					command.ExecuteNonQuery();
-					loaddata();
+				command = connection.CreateCommand();
+				command.CommandText = "delete from ThongTinNV where MaNV = '" + tbmanv.Text + "'";
+				command.ExecuteNonQuery();
+				loaddata();
 
 			}
 			catch (Exception ex)
@@ -240,7 +267,7 @@ namespace QuanLyCongTyDone
 				{
 					throw new Exception("Lỗi tên nhân viên không hợp lệ");
 				}
-				
+
 
 			}
 			catch (Exception ex)
@@ -292,6 +319,11 @@ namespace QuanLyCongTyDone
 			this.Hide();
 			Login lg = new Login();
 			lg.Show();
+		}
+
+		private void bunifuButton2_Click(object sender, EventArgs e)
+		{
+			ExportToExcel(dtgnv);
 		}
 	}
 }
