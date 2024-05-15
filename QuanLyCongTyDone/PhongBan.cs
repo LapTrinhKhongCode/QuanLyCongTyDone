@@ -126,26 +126,50 @@ namespace QuanLyCongTyDone
 
 		private void btthempb_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-			command.CommandText = "insert into PhongBan values(N'" + tbtenpb2.Text + "','" + tbtentp3.GetItemText(tbtentp3.SelectedValue) + "','" + tbmada4.GetItemText(tbmada4.SelectedValue) + "')";
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+				command = connection.CreateCommand();
+				command.CommandText = "insert into PhongBan values(N'" + tbtenpb2.Text + "','" + tbtentp3.GetItemText(tbtentp3.SelectedValue) + "','" + tbmada4.GetItemText(tbmada4.SelectedValue) + "')";
+				command.ExecuteNonQuery();
+				loaddata();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
 		}
+			
+		
 
 		private void btnsuapb_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-			command.CommandText = "update PhongBan set TenPB = N'" + tbtenpb2.Text + "',MaTruongPhong = '" + tbtentp3.GetItemText(tbtentp3.SelectedValue) + "',MaDA = '" + tbmada4.GetItemText(tbmada4.SelectedValue) + "'where MaPB = '" + tbmapb1.Text + "'";
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+				command = connection.CreateCommand();
+				command.CommandText = "update PhongBan set TenPB = N'" + tbtenpb2.Text + "',MaTruongPhong = '" + tbtentp3.GetItemText(tbtentp3.SelectedValue) + "',MaDA = '" + tbmada4.GetItemText(tbmada4.SelectedValue) + "'where MaPB = '" + tbmapb1.Text + "'";
+				command.ExecuteNonQuery();
+				loaddata();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
 		}
 
 		private void btnxoapb_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-			command.CommandText = "delete from PhongBan where MaPB = '" + tbmapb1.Text + "'";
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+				command = connection.CreateCommand();
+				command.CommandText = "delete from PhongBan where MaPB = '" + tbmapb1.Text + "'";
+				command.ExecuteNonQuery();
+				loaddata();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
+
 		}
 
 		private void btnclear_Click(object sender, EventArgs e)

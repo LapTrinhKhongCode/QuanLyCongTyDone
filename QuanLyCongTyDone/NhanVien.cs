@@ -9,14 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace QuanLyCongTyDone
 {
 	public partial class NhanVien : Form
 	{
+
 		public NhanVien()
 		{
 			InitializeComponent();
+
+
+
 		}
 
 		SqlConnection connection;
@@ -104,6 +110,17 @@ namespace QuanLyCongTyDone
 			tbmanv.ReadOnly = true;
 
 
+			if (Login.role != 1)
+			{
+				bunifuButton25.Visible = false;
+				bunifuButton1.Visible = true;
+			}else
+			{
+				bunifuButton25.Visible = true;
+				bunifuButton1.Visible = false;
+			}
+
+
 
 		}
 
@@ -112,7 +129,6 @@ namespace QuanLyCongTyDone
 
 		private void dtgnv_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-
 			int i = 0;
 			i = dtgnv.CurrentRow.Index;
 			tbmanv.Text = dtgnv.Rows[i].Cells[0].Value.ToString();
@@ -127,11 +143,36 @@ namespace QuanLyCongTyDone
 
 		private void bunifuButton21_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
+			try
+			{
 
-			command.CommandText = "insert into ThongTinNV values(N'" + tbtennv.Text + "','" + dtngaysinh.Text + "',N'" + tbgioitinh.Text + "',N'" + tbchucvu.Text + "','" + tbtienluong.Text + "',N'" + tbmapb.GetItemText(tbmapb.SelectedValue) + "',N'" + tbmada.GetItemText(tbmada.SelectedValue) + "')";
-			command.ExecuteNonQuery();
-			loaddata();
+				string input = tbtennv.Text;
+				string pattern = @"^[A-Z][a-zA-Z]*(\s[A-Z][a-zA-Z]*)*$";
+				Regex regex = new Regex(pattern);
+
+				if (regex.IsMatch(input))
+				{
+					command = connection.CreateCommand();
+					command.CommandText = "insert into ThongTinNV values(N'" + tbtennv.Text + "','" + dtngaysinh.Text + "',N'" + tbgioitinh.Text + "',N'" + tbchucvu.Text + "','" + tbtienluong.Text + "',N'" + tbmapb.GetItemText(tbmapb.SelectedValue) + "',N'" + tbmada.GetItemText(tbmada.SelectedValue) + "')";
+					command.ExecuteNonQuery();
+					loaddata();
+				}
+				else
+				{
+					throw new Exception("Lỗi tên nhân viên không hợp lệ");
+				}
+				
+			}			
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
+			catch
+			{
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
+
+
 		}
 
 
@@ -148,6 +189,9 @@ namespace QuanLyCongTyDone
 
 		}
 
+
+
+
 		private void bunifuButton25_Click(object sender, EventArgs e)
 		{
 			this.Hide();
@@ -155,20 +199,55 @@ namespace QuanLyCongTyDone
 			Home.Show();
 		}
 
+
 		private void bunifuButton23_Click_1(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-			command.CommandText = "delete from ThongTinNV where MaNV = '" + tbmanv.Text + "'";
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+
+
+
+					command = connection.CreateCommand();
+					command.CommandText = "delete from ThongTinNV where MaNV = '" + tbmanv.Text + "'";
+					command.ExecuteNonQuery();
+					loaddata();
+
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
+
 		}
 
 		private void btsua_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-			command.CommandText = "update ThongTinNV set TenNV = N'" + tbtennv.Text + "',NgaySinh = '" + dtngaysinh.Text + "',GioiTinh = N'" + tbgioitinh.Text + "',ChucVu = N'" + tbchucvu.Text + "',TienLuong = '" + tbtienluong.Text + "',MaPB = '" + tbmapb.GetItemText(tbmapb.SelectedValue) + "',MaDA = '" + tbmada.GetItemText(tbmada.SelectedValue) + "'where MaNV = '" + tbmanv.Text + "'";
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+
+				string input = tbtennv.Text;
+				string pattern = @"^[A-Z][a-zA-Z]*(\s[A-Z][a-zA-Z]*)*$";
+				Regex regex = new Regex(pattern);
+
+				if (regex.IsMatch(input))
+				{
+					command = connection.CreateCommand();
+					command.CommandText = "update ThongTinNV set TenNV = N'" + tbtennv.Text + "',NgaySinh = '" + dtngaysinh.Text + "',GioiTinh = N'" + tbgioitinh.Text + "',ChucVu = N'" + tbchucvu.Text + "',TienLuong = '" + tbtienluong.Text + "',MaPB = '" + tbmapb.GetItemText(tbmapb.SelectedValue) + "',MaDA = '" + tbmada.GetItemText(tbmada.SelectedValue) + "'where MaNV = '" + tbmanv.Text + "'";
+					command.ExecuteNonQuery();
+					loaddata();
+				}
+				else
+				{
+					throw new Exception("Lỗi tên nhân viên không hợp lệ");
+				}
+				
+
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
+
 		}
 
 		private void btnclear_Click(object sender, EventArgs e)
@@ -179,8 +258,8 @@ namespace QuanLyCongTyDone
 			tbgioitinh.Text = "";
 			tbchucvu.Text = "";
 			tbtienluong.Text = "";
-			tbmada.Text = "";
-			tbmapb.Text = "";
+			tbmada.Text = "Select";
+			tbmapb.Text = "Select";
 		}
 
 		private void tbmapb_KeyPress(object sender, KeyPressEventArgs e)
@@ -201,11 +280,18 @@ namespace QuanLyCongTyDone
 		private void cbgroupphong_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			command = connection.CreateCommand();
-			command.CommandText = "SELECT MaNV, TenNV, NgaySinh, GioiTinh, ChucVu, TienLuong, TenPB, TenDA From ThongTinNV JOIN PhongBan ON ThongTinNV.MaPB = PhongBan.MaPB JOIN DeAn ON DeAn.MaDA = ThongTinNV.MaDA WHERE PhongBan.TenPB = '"+cbgroupphong.Text+"' ";
+			command.CommandText = "SELECT MaNV, TenNV, NgaySinh, GioiTinh, ChucVu, TienLuong, TenPB, TenDA From ThongTinNV JOIN PhongBan ON ThongTinNV.MaPB = PhongBan.MaPB JOIN DeAn ON DeAn.MaDA = ThongTinNV.MaDA WHERE PhongBan.TenPB = '" + cbgroupphong.Text + "' ";
 			adapter.SelectCommand = command;
 			table.Clear();
 			adapter.Fill(table);
 			dtgnv.DataSource = table;
+		}
+
+		private void bunifuButton1_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			Login lg = new Login();
+			lg.Show();
 		}
 	}
 }

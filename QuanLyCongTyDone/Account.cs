@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using Microsoft.VisualBasic.ApplicationServices;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Security.Cryptography;
 
 namespace QuanLyCongTyDone
 {
@@ -33,12 +35,13 @@ namespace QuanLyCongTyDone
 			table.Clear();
 			adapter.Fill(table);
 			dtgac.DataSource = table;
-
-
-
 		}
 
-
+		// Function to hash password using MD5
+		public static string GetMD5Hash(string input)
+		{
+			return Eramake.eCryptography.Encrypt(input);
+		}
 
 		private void bunifuButton5_Click(object sender, EventArgs e)
 		{
@@ -86,7 +89,7 @@ namespace QuanLyCongTyDone
 
 		private void dtgac_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			
+
 			int i = 0;
 			i = dtgac.CurrentRow.Index;
 			tbid1.Text = dtgac.Rows[i].Cells[0].Value.ToString();
@@ -100,33 +103,54 @@ namespace QuanLyCongTyDone
 
 		private void btthem_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-
-			command.CommandText = "insert into UserAccount values(N'" + tbus2.Text + "',N'" + tbpw3.Text + "',N'" + cbrole2.GetItemText(cbrole2.SelectedValue) + "')";
-			//UPDATE user_account
-			//			JOIN role
-			//ON user_account.iduser = role.id
-			//SET role.role = "Quản trị viên"
-			//WHERE user_account.iduser = 1;
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+				command = connection.CreateCommand();
+				string passwordhash = GetMD5Hash(tbpw3.Text);
+				command.CommandText = "insert into UserAccount values(N'" + tbus2.Text + "',N'" + passwordhash + "',N'" + cbrole2.GetItemText(cbrole2.SelectedValue) + "')";
+				//UPDATE user_account
+				//			JOIN role
+				//ON user_account.iduser = role.id
+				//SET role.role = "Quản trị viên"
+				//WHERE user_account.iduser = 1;
+				command.ExecuteNonQuery();
+				loaddata();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi kiểu dữ liệu", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
 		}
 
 		private void btSua_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-
-			command.CommandText = "update UserAccount set username = N'" + tbus2.Text + "',password = N'" + tbpw3.Text + "',idrole = '" + cbrole2.GetItemText(cbrole2.SelectedValue) + "'where iduser = '" + tbid1.Text + "'";
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+				command = connection.CreateCommand();
+				string passwordhash = GetMD5Hash(tbpw3.Text);
+				command.CommandText = "update UserAccount set username = N'" + tbus2.Text + "',password = N'" + passwordhash + "',idrole = '" + cbrole2.GetItemText(cbrole2.SelectedValue) + "'where iduser = '" + tbid1.Text + "'";
+				command.ExecuteNonQuery();
+				loaddata();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi kiểu dữ liệu", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
 		}
 
 		private void btXoa_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-			command.CommandText = "delete from UserAccount where iduser = '" + tbid1.Text + "'";
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+				command = connection.CreateCommand();
+				command.CommandText = "delete from UserAccount where iduser = '" + tbid1.Text + "'";
+				command.ExecuteNonQuery();
+				loaddata();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi kiểu dữ liệu", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
 		}
 
 		private void btclear_Click(object sender, EventArgs e)
@@ -145,6 +169,44 @@ namespace QuanLyCongTyDone
 		private void cbrole2_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			e.Handled = true;
+		}
+
+		private void cbrole2_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			//if (cbrole2.GetItemText(cbrole2.SelectedItem).ToString() == "TruongPhong")
+			//{
+			//	cbphong.Visible = true;
+			//	lbphong.Visible = true;
+
+			//	command.CommandText = "SELECT MaPB FROM PhongBan";
+			//	SqlDataReader reader = command.ExecuteReader();
+			//	if (reader.HasRows)
+			//	{
+			//		// Duyệt qua các dòng dữ liệu
+			//		while (reader.Read())
+			//		{
+			//			// Đọc giá trị từ cột và thêm vào ComboBox
+			//			cbphong.Items.Add(reader.GetInt32(0));
+			//		}
+			//	}
+			//	reader.Close();
+
+			//	DataSet ds1 = new DataSet();
+			//	SqlDataAdapter da1 = new SqlDataAdapter("SELECT MaPB, TenPB FROM PhongBan", sql);
+			//	da1.Fill(ds1, "TenPB");
+			//	cbphong.DataSource = ds1.Tables["TenPB"];
+			//	cbphong.DisplayMember = "TenPB";
+			//	cbphong.ValueMember = "MaPB";
+
+				
+
+
+			//}
+			//else {
+			//	lbphong.Visible = false;
+			//	lbphong.Visible = false;
+			//} 
+
 		}
 	}
 }

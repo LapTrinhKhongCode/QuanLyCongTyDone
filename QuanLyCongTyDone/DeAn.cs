@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace QuanLyCongTyDone
 {
@@ -46,10 +47,8 @@ namespace QuanLyCongTyDone
 			connection = new SqlConnection(sql);
 			connection.Open();
 			loaddata();
+			tbmada.ReadOnly=true;
 		}
-
-
-
 
 
 		private void bunifuLabel1_Click(object sender, EventArgs e)
@@ -66,32 +65,65 @@ namespace QuanLyCongTyDone
 
 		private void btthem_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-			command.CommandText = "insert into DeAn values(N'" + tbtenda.Text + "')";
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+
+
+				command = connection.CreateCommand();
+				command.CommandText = "insert into DeAn values(N'" + tbtenda.Text + "')";
+				command.ExecuteNonQuery();
+				loaddata();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
 		}
 
 		private void btsua_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-			command.CommandText = "update DeAn set TenDA = '" + tbtenda.Text + "'where MaNV = '" + tbtenda.Text + "'";
-			command.ExecuteNonQuery();
-			loaddata();
+			
+			try
+			{
+				command = connection.CreateCommand();
+				command.CommandText = "update DeAn set TenDA = N'" + tbtenda.Text + "'where MaDA = '" + tbmada.Text + "'";
+				command.ExecuteNonQuery();
+				loaddata();
+				
+			}
+			catch (Exception ex)
+			{	
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
 		}
 
 		private void btxoa_Click(object sender, EventArgs e)
 		{
-			command = connection.CreateCommand();
-			command.CommandText = "delete from DeAn where MaDA = '" + tbmada.Text + "'";
-			command.ExecuteNonQuery();
-			loaddata();
+			try
+			{
+				command = connection.CreateCommand();
+				command.CommandText = "delete from DeAn where MaDA = '" + tbmada.Text + "'";
+				command.ExecuteNonQuery();
+				loaddata();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Lỗi", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+			}
 		}
 
 		private void btclear_Click(object sender, EventArgs e)
 		{
 			tbmada.Text = "";
 			tbtenda.Text = "";
+		}
+
+		private void dtgda_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			int i = 0;
+			i = dtgda.CurrentRow.Index;
+			tbmada.Text = dtgda.Rows[i].Cells[0].Value.ToString();
+			tbtenda.Text = dtgda.Rows[i].Cells[1].Value.ToString();
 		}
 	}
 }

@@ -218,7 +218,7 @@
 			btthem.IdleIconLeftImage = null;
 			btthem.IdleIconRightImage = null;
 			btthem.IndicateFocus = false;
-			btthem.Location = new Point(18, 366);
+			btthem.Location = new Point(18, 432);
 			btthem.Name = "btthem";
 			btthem.OnDisabledState.BorderColor = Color.FromArgb(191, 191, 191);
 			btthem.OnDisabledState.BorderRadius = 1;
@@ -383,7 +383,7 @@
 			btSua.IdleIconLeftImage = null;
 			btSua.IdleIconRightImage = null;
 			btSua.IndicateFocus = false;
-			btSua.Location = new Point(178, 366);
+			btSua.Location = new Point(178, 432);
 			btSua.Name = "btSua";
 			btSua.OnDisabledState.BorderColor = Color.FromArgb(191, 191, 191);
 			btSua.OnDisabledState.BorderRadius = 1;
@@ -474,7 +474,7 @@
 			btXoa.IdleIconLeftImage = null;
 			btXoa.IdleIconRightImage = null;
 			btXoa.IndicateFocus = false;
-			btXoa.Location = new Point(339, 366);
+			btXoa.Location = new Point(339, 432);
 			btXoa.Name = "btXoa";
 			btXoa.OnDisabledState.BorderColor = Color.FromArgb(191, 191, 191);
 			btXoa.OnDisabledState.BorderRadius = 1;
@@ -565,7 +565,7 @@
 			btclear.IdleIconLeftImage = null;
 			btclear.IdleIconRightImage = null;
 			btclear.IndicateFocus = false;
-			btclear.Location = new Point(502, 366);
+			btclear.Location = new Point(502, 432);
 			btclear.Name = "btclear";
 			btclear.OnDisabledState.BorderColor = Color.FromArgb(191, 191, 191);
 			btclear.OnDisabledState.BorderRadius = 1;
@@ -656,7 +656,7 @@
 			bunifuButton5.IdleIconLeftImage = null;
 			bunifuButton5.IdleIconRightImage = null;
 			bunifuButton5.IndicateFocus = false;
-			bunifuButton5.Location = new Point(661, 366);
+			bunifuButton5.Location = new Point(661, 432);
 			bunifuButton5.Name = "bunifuButton5";
 			bunifuButton5.OnDisabledState.BorderColor = Color.FromArgb(191, 191, 191);
 			bunifuButton5.OnDisabledState.BorderRadius = 1;
@@ -899,6 +899,7 @@
 			cbrole2.Name = "cbrole2";
 			cbrole2.Size = new Size(149, 28);
 			cbrole2.TabIndex = 13;
+			cbrole2.SelectedIndexChanged += cbrole2_SelectedIndexChanged;
 			cbrole2.KeyDown += cbrole2_KeyDown;
 			cbrole2.KeyPress += cbrole2_KeyPress;
 			// 
@@ -906,7 +907,7 @@
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(800, 450);
+			ClientSize = new Size(800, 505);
 			Controls.Add(cbrole2);
 			Controls.Add(lbrole);
 			Controls.Add(tbpw3);
