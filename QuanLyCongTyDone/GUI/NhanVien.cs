@@ -129,19 +129,19 @@ namespace QuanLyCongTyDone
 
 		private void ExportToExcel(DataGridView dgv)
 		{
-			// Tạo một đối tượng Excel.Application
+			
 			Excel.Application excelApp = new Excel.Application();
 
-			// Tạo một Workbook mới
+			
 			Excel.Workbook excelWorkbook = excelApp.Workbooks.Add();
 
-			// Tạo một Worksheet
+			
 			Excel.Worksheet excelWorksheet = (Excel.Worksheet)excelWorkbook.Sheets[1];
 
-			// Gán tên cho Worksheet
+			
 			excelWorksheet.Name = "Data";
 
-			// Ghi dữ liệu từ DataGridView vào Excel
+			
 			for (int i = 0; i < dgv.Rows.Count; i++)
 			{
 				for (int j = 0; j < dgv.Columns.Count; j++)
@@ -150,7 +150,7 @@ namespace QuanLyCongTyDone
 				}
 			}
 
-			// Mở Excel và hiển thị Workbook
+			
 			excelApp.Visible = true;
 		}
 

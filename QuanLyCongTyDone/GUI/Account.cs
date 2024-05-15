@@ -60,10 +60,10 @@ namespace QuanLyCongTyDone
 			SqlDataReader reader = command.ExecuteReader();
 			if (reader.HasRows)
 			{
-				// Duyệt qua các dòng dữ liệu
+				
 				while (reader.Read())
 				{
-					// Đọc giá trị từ cột và thêm vào ComboBox
+					
 					cbrole2.Items.Add(reader.GetString(0));
 				}
 			}
